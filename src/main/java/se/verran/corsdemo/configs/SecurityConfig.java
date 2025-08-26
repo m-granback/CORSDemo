@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
@@ -14,19 +15,18 @@ import java.util.List;
 public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        // CSRF
-        http.csrf((csrf)->csrf.disable()); // Inactivate CSRF-protection
 
-        // Allow access without login
+        http.csrf((csrf)->csrf.disable()); // Inactivate CSRF-protection
         http.authorizeHttpRequests(auth->auth.anyRequest().permitAll());
 
-        // CORS
-        http
+                http
                 .cors(c->{
                     CorsConfigurationSource ccs = request-> {
                         CorsConfiguration cc = new CorsConfiguration();
-                        cc.setAllowedOrigins(List.of("http://127.0.0.1:8080"));
-                        cc.setAllowedMethods(List.of("POST", "GET"));
+                        cc.setAllowedOrigins(List.of("http://127.0.0.1:8080", "http://localhost:8080"/*, "null"*/));
+                        cc.setAllowedMethods(List.of("POST", "GET", "OPTIONS"));
+                        cc.setAllowedHeaders(List.of("*"));
+                        cc.setAllowCredentials(true);
                         return cc;
                     };
                     c.configurationSource(ccs);
