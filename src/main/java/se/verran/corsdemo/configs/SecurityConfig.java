@@ -19,18 +19,18 @@ public class SecurityConfig {
         http.csrf((csrf)->csrf.disable()); // Inactivate CSRF-protection
         http.authorizeHttpRequests(auth->auth.anyRequest().permitAll());
 
-                http
+/*                http
                 .cors(c->{
                     CorsConfigurationSource ccs = request-> {
                         CorsConfiguration cc = new CorsConfiguration();
-                        cc.setAllowedOrigins(List.of("http://127.0.0.1:8080", "http://localhost:8080"/*, "null"*/));
+                        cc.setAllowedOrigins(List.of("http://127.0.0.1:8080", "http://localhost:8080", "null"));
                         cc.setAllowedMethods(List.of("POST", "GET", "OPTIONS"));
                         cc.setAllowedHeaders(List.of("*"));
                         cc.setAllowCredentials(true);
                         return cc;
                     };
                     c.configurationSource(ccs);
-                });
+                });*/
 
         return http.build();
     }
